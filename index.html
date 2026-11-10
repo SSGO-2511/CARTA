@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carta para a Vitória</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
+    <style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fde4ea;
+  font-family: "Dancing Script", cursive;
+}
+
+.envlope-wrapper { margin-top: 220px; }
+
+#envelope {
+  position: relative;
+  width: min(300px, 80vw);
+  height: 200px;
+  background: #e8798f;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+
+/* Aba de cima */
+.front.flap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-left: min(150px, 40vw) solid transparent;
+  border-right: min(150px, 40vw) solid transparent;
+  border-top: 105px solid #d9647c;
+  transform-origin: top;
+  transition: transform .5s .5s, z-index .5s .5s;
+  z-index: 6;
+}
+.open .front.flap { transform: rotateX(180deg); z-index: 1; transition: transform .5s, z-index .5s; }
+.close .front.flap { transition: transform .5s .6s, z-index .5s .6s; }
+
+/* Parte da frente (bolso) */
+.front.pocket {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-left: min(150px, 40vw) solid #f08ea2;
+  border-right: min(150px, 40vw) solid #f08ea2;
+  border-bottom: 110px solid #f4a3b3;
+  border-top: 90px solid transparent;
+}
+
+/* A CARTA: cresce e rola */
+.letter {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: calc(100% - 20px);
+  height: 160px;
+  background: #fffdf8;
+  border-radius: 6px;
+  padding: 16px 18px;
+  overflow-y: auto;            /* rolagem se o texto for grande */
+  z-index: 2;
+  transition: all .6s ease, z-index 0s .6s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+}
+.close .letter { transition: all .6s .3s ease, z-index 0s 0s; }
+
+.open .letter {
+  left: -20px;
+  width: calc(100% + 40px);
+  height: 380px;               /* mude aqui se quiser maior */
+  bottom: 10px;
+  z-index: 5;                  /* passa na frente do bolso */
+  transition: all .7s .6s ease, z-index 0s .6s;
+}
+
+.words {
+  color: #7a2a3c;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  opacity: 0;
+  transition: opacity .6s;
+}
+.line1 { font-size: 1.6rem; font-weight: 700; }
+.line4 { text-align: right; font-size: 1.6rem; font-weight: 700; }
+
+.open .words { opacity: 1; }
+.open .line1 { transition-delay: 1.3s; }
+.open .line2 { transition-delay: 1.9s; }
+.open .line3 { transition-delay: 2.5s; }
+.open .line4 { transition-delay: 3.1s; }
+
+/* Coraçõezinhos */
+.hearts { position: absolute; left: 50%; top: 60px; z-index: 7; pointer-events: none; }
+.heart {
+  position: absolute;
+  width: 14px; height: 14px;
+  background: #ff4d6d;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+.heart::before, .heart::after {
+  content: "";
+  position: absolute;
+  width: 14px; height: 14px;
+  background: #ff4d6d;
+  border-radius: 50%;
+}
+.heart::before { top: -7px; left: 0; }
+.heart::after  { left: -7px; top: 0; }
+
+.open .heart.a1 { animation: float 3s 1.2s infinite; left: -60px; }
+.open .heart.a2 { animation: float 3.4s 1.8s infinite; left: 0; }
+.open .heart.a3 { animation: float 2.8s 2.4s infinite; left: 60px; }
+
+@keyframes float {
+  0%   { opacity: 0; transform: translateY(0) rotate(45deg); }
+  20%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-200px) rotate(45deg); }
+}
+
+/* Botões */
+.reset { margin-top: 40px; display: flex; gap: 12px; }
+.reset button {
+  font-family: inherit;
+  font-size: 1.2rem;
+  padding: 8px 22px;
+  border: none;
+  border-radius: 20px;
+  background: #e8798f;
+  color: #fff;
+  cursor: pointer;
+}
+.reset button:hover { background: #d9647c; }
+
+</style>
+  </head>
+  <body>
+    <div class="envlope-wrapper">
+      <div id="envelope" class="close">
+        <div class="front flap"></div>
+        <div class="front pocket"></div>
+        <div class="letter">
+          <div class="words line1">Para: Vitória</div>
+          <div class="words line2">Meu amor, não fique preocupada com essa prova, ela não vai definir seu futuro.</div>
+          <div class="words line3">Não fica triste assim, que eu também fico. Qualquer coisa, estou aqui para conversar.</div>
+          <div class="words line4">Te amo demais ❤</div>
+        </div>
+        <div class="hearts">
+          <div class="heart a1"></div>
+          <div class="heart a2"></div>
+          <div class="heart a3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reset">
+      <button id="open">ABRIR</button>
+      <button id="reset">FECHAR</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+$(function () {
+  const $env = $("#envelope");
+
+  function abrir() {
+    $env.removeClass("close").addClass("open");
+  }
+  function fechar() {
+    $env.removeClass("open").addClass("close");
+    $(".letter").scrollTop(0);
+  }
+
+  $("#open").on("click", abrir);
+  $("#reset").on("click", fechar);
+  $env.on("click", function (e) {
+    if ($env.hasClass("close")) abrir();
+  });
+});
+
+</script>
+  </body>
+</html>
